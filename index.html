@@ -6,17 +6,40 @@
     <title>Art</title>
     <style>
         html, body {
-            height:100%;
+            height: 100vh;
         }
 
         body {
             margin:0;
+            display: flex;
+            --label-display: none;
+        }
+        aside {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        aside,
+        aside input {
+            width: 100%;
+        }
+
+        aside label {
+            display: var(--label-display);
         }
     </style>
 </head>
 <body>
-    <canvas></canvas>
-
+    <main>
+        <canvas></canvas>
+    </main>
+    <aside>
+        <!-- If you've come here to try and know the secrets of the sliders, send me a message at quentin@widlocher.com -->
+    </aside>
     <script defer type="module" src="./index.js"></script>
 </body>
 </html>

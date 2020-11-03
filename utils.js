@@ -30,7 +30,6 @@ export function wrap(min, max, val) {
     if (val < min) result = max - (min - val)
     if (val > max) result = min + (val - max)
     if (max < result || result < min) result = wrap(min, max, result)
-    console.debug([val, result])
     return result
 }
 
@@ -49,8 +48,8 @@ export function HSLToRGB([h, s, l]) {
     }
 
     h = wrap(0, 360, h)
-    s = clamp(0, 1, s)
-    l = clamp(0, 1, l)
+    s = wrap(0, 1, s)
+    l = wrap(0, 1, l)
 
     var c = (1 - Math.abs(2 * l - 1)) * s
     var hP = h / 60
