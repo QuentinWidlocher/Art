@@ -1,4 +1,4 @@
-import { rbgaToByte, randomInt, random, HSLToRGB } from '../utils.js'
+import { randomInt, random, HSLToRGB, getRGBA } from '../../utils.js'
 
 const canvas = document.querySelector('canvas')
 if (!canvas.getContext) alert('This website is not supported by your web browser. Ever heard of Chrome ? Firefox maybe ..?')
@@ -7,28 +7,28 @@ const height = document.body.clientHeight
 const width = document.body.clientWidth * (4/5)
 
 const params = {
-    edges:              { min: 3, max: 10,      value: 5,       step: 1     },
-    delay:              { min: 0, max: 1000,    value: 200,    step: 1      },
-    hueStart:           { min: 0, max: 360,     value: 0,     step: 0.1     },
-    hueEnd:             { min: 0, max: 360,     value: 360,     step: 0.1   },
-    hueFactor:          { min: 0, max: 10,      value: 10,      step: 0.1   },
-    hueOffset:          { min: 0, max: 360,     value: 10,      step: 1     },
-    hueChangeWithTime:  { min: 0, max: 1,       value: 1,       step: 1     },
-    satStart:           { min: 0, max: 1,       value: 0.4,     step: 0.1   },
-    satEnd:             { min: 0, max: 1,       value: 0.6,     step: 0.1   },
-    satFactor:          { min: 0, max: 10,      value: 1,      step: 0.1    },
-    satOffset:          { min: 0, max: 1,       value: 0.5,      step: 0.1  },
-    satChangeWithTime:  { min: 0, max: 1,       value: 0,       step: 1     },
-    lightStart:         { min: 0, max: 1,       value: 0.4,     step: 0.1   },
-    lightEnd:           { min: 0, max: 1,       value: 0.6,     step: 0.1   },
-    lightFactor:        { min: 0, max: 10,      value: 1,      step: 0.1    },
-    lightOffset:        { min: 0, max: 1,       value: 0.5,      step: 0.1  },
-    lightChangeWithTime:{ min: 0, max: 1,       value: 0,       step: 1     },
-    alphaStart:         { min: 0, max: 1,       value: 1,       step: 0.1   },
-    alphaEnd:           { min: 0, max: 1,       value: 1,       step: 0.1   },
-    alphaFactor:        { min: 0, max: 10,      value: 1,      step: 0.1    },
-    alphaOffset:        { min: 0, max: 1,       value: 0.5,      step: 0.1  },
-    alphaChangeWithTime:{ min: 0, max: 1,       value: 0,       step: 1     },
+    edges:              { min: 3, max: 10,      value: 5,   step: 10    },
+    delay:              { min: 0, max: 1000,    value: 200, step: 1     },
+    hueStart:           { min: 0, max: 360,     value: 0,   step: 0.1   },
+    hueEnd:             { min: 0, max: 360,     value: 360, step: 0.1   },
+    hueFactor:          { min: 0, max: 10,      value: 10,  step: 0.1   },
+    hueOffset:          { min: 0, max: 360,     value: 10,  step: 1     },
+    hueChangeWithTime:  { min: 0, max: 1,       value: 1,   step: 1     },
+    satStart:           { min: 0, max: 1,       value: 0.4, step: 0.1   },
+    satEnd:             { min: 0, max: 1,       value: 0.6, step: 0.1   },
+    satFactor:          { min: 0, max: 10,      value: 1,   step: 0.1   },
+    satOffset:          { min: 0, max: 1,       value: 0.5, step: 0.1   },
+    satChangeWithTime:  { min: 0, max: 1,       value: 0,   step: 1     },
+    lightStart:         { min: 0, max: 1,       value: 0.4, step: 0.1   },
+    lightEnd:           { min: 0, max: 1,       value: 0.6, step: 0.1   },
+    lightFactor:        { min: 0, max: 10,      value: 1,   step: 0.1   },
+    lightOffset:        { min: 0, max: 1,       value: 0.5, step: 0.1   },
+    lightChangeWithTime:{ min: 0, max: 1,       value: 0,   step: 1     },
+    alphaStart:         { min: 0, max: 1,       value: 1,   step: 0.1   },
+    alphaEnd:           { min: 0, max: 1,       value: 1,   step: 0.1   },
+    alphaFactor:        { min: 0, max: 10,      value: 1,   step: 0.1   },
+    alphaOffset:        { min: 0, max: 1,       value: 0.5, step: 0.1   },
+    alphaChangeWithTime:{ min: 0, max: 1,       value: 0,   step: 1     },
 }
 
 var secretIsUnveiled = false
@@ -40,8 +40,7 @@ function getRandomV2(xStart = 0, xEnd = width, yStart = 0, yEnd = height) {
 }
 
 function fillColor(color) {
-    var [r, g, b, a] = rbgaToByte(color)
-    ctx.fillStyle = `rgba(${r},${g},${b},${a})`
+    ctx.fillStyle = getRGBA(color)
     ctx.fill()
 }
 

@@ -1,4 +1,4 @@
-import { run } from './experiences/experience-02/experience-02.js'
+import { run } from './experience-02.js'
 
 function docReady(fn) {
     // see if DOM is already available

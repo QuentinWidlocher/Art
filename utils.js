@@ -13,6 +13,11 @@ export function rbgaToByte([r = 1, g = 1, b = 1, a = 1]) {
     return [...[r, g, b].map(toByte), a]
 }
 
+export function getRGBA(color) {
+    var [r, g, b, a] = rbgaToByte(color)
+    return `rgba(${r},${g},${b},${a})`
+}
+
 export function randomInt(from = 0, to = 1) {
     return Math.round(random(from, to))
 }
